@@ -3,38 +3,14 @@
 #Setting environment variables
 source .env
 
-#Updating the packages
-apt-get update
+#Copying the environment variables to the server
+scp .env $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 
-#Installing docker compose
-apt-get install -y docker-compose
+#Copying the script to the server
+scp server.sh $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 
-#Giving permissions to the docker sock
-chmod 700 /var/run/docker.sock
+#Copying the nginx proxy manager docker compose to the server
+scp docker-compose.yml $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 
-#Creating the docker network
-docker network create $SCRIPT_ENV_DOCKER_NETWORK
-
-#Login to Docker
-docker login -u$SCRIPT_ENV_DOCKER_USER -p$SCRIPT_ENV_DOCKER_PASSWORD $SCRIPT_ENV_DOCKER_HOST
-
-#Downloading the gitlab runner
-curl -LJO "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_$SCRIPT_ENV_LINUX_ARCHITECTURE.deb"
-
-#Installing the gitlab runner
-dpkg -i gitlab-runner_$SCRIPT_ENV_LINUX_ARCHITECTURE.deb
-
-#Registering the gitlab runner
-gitlab-runner register \
-  --non-interactive \
-  --url "$SCRIPT_ENV_RUNNER_REGISTRATION_HOST" \
-  --registration-token "$SCRIPT_ENV_RUNNER_REGISTRATION_TOKEN" \
-  --executor "shell" \
-  --description "$SCRIPT_ENV_RUNNER_REGISTRATION_DESCRIPTION" \
-  --tag-list "$SCRIPT_ENV_RUNNER_REGISTRATION_TAGS"
-  
-#Running the gitlab runner
-gitlab-runner run &
-
-#Getting up the nginx proxy manager
-docker-compose up -d
+#Running the script on the server
+ssh $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP "bash server.sh"
