@@ -10,13 +10,13 @@ apt-get update
 apt-get install -y docker-compose
 
 #Giving permissions to the docker sock
-chmod 700 /var/run/docker.sock
+chmod 777 /var/run/docker.sock
 
 #Creating the docker network
 docker network create $SCRIPT_ENV_DOCKER_NETWORK
 
 #Login to Docker
-docker login -u$SCRIPT_ENV_DOCKER_USER -p$SCRIPT_ENV_DOCKER_PASSWORD $SCRIPT_ENV_DOCKER_HOST
+docker login -u $SCRIPT_ENV_DOCKER_USER -p $SCRIPT_ENV_DOCKER_PASSWORD $SCRIPT_ENV_DOCKER_HOST
 
 #Downloading the gitlab runner
 curl -LJO "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_$SCRIPT_ENV_LINUX_ARCHITECTURE.deb"
