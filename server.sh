@@ -36,8 +36,34 @@ gitlab-runner register \
 #Running the gitlab runner
 gitlab-runner run &
 
-#Getting up the nginx proxy manager
-docker-compose up -d
+#Create nginx proxy reverse configuration file
+tee custom.conf <<EOF
+server {
+    listen 80;
+
+    server_name $SCRIPT_ENV_DOMAIN_NAME_WEB1;
+
+    location / {
+        proxy_pass $SCRIPT_ENV_PROXY_PASS_WEB1;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 80;
+
+    server_name $SCRIPT_ENV_DOMAIN_NAME_WEB2;
+
+    location / {
+        proxy_pass $SCRIPT_ENV_PROXY_PASS_WEB2;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    }
+}
+EOF
 
 #Removing environment variables
 rm .env
