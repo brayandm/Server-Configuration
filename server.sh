@@ -44,7 +44,7 @@ server {
     server_name $SCRIPT_ENV_DOMAIN_NAME_WEB1;
 
     location / {
-        proxy_pass $SCRIPT_ENV_PROXY_PASS_WEB1;
+        proxy_pass http://$SCRIPT_ENV_SERVER_IP:$SCRIPT_ENV_PORT_WEB1;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -57,13 +57,16 @@ server {
     server_name $SCRIPT_ENV_DOMAIN_NAME_WEB2;
 
     location / {
-        proxy_pass $SCRIPT_ENV_PROXY_PASS_WEB2;
+        proxy_pass http://$SCRIPT_ENV_SERVER_IP:$SCRIPT_ENV_PORT_WEB2;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 }
 EOF
+
+#Getting up the nginx proxy manager
+docker-compose up -d
 
 #Removing environment variables
 rm .env

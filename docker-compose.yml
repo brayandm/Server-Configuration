@@ -1,18 +1,13 @@
 version: '3.5'
 
 services:
-  app:
-    image: jc21/nginx-proxy-manager:latest
-    restart: unless-stopped
+  nginx-proxy-manager:
+    build: .
+    restart: always
     ports:
       - "80:80"
-      - "81:81"
-      - "443:443"
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
 
 networks:
   default:
-    external: true
+    external: false
     name: hs-leagues-of-code-network

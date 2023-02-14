@@ -9,6 +9,9 @@ scp .env $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 #Copying the script to the server
 scp server.sh $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 
+#Copying the nginx proxy manager docker file to the server
+scp Dockerfile $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
+
 #Copying the nginx proxy manager docker compose to the server
 scp docker-compose.yml $SCRIPT_ENV_SERVER_USER@$SCRIPT_ENV_SERVER_IP:/root/
 
