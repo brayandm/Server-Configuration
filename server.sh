@@ -15,7 +15,7 @@ chmod 777 /var/run/docker.sock
 #Creating the docker network
 docker network create $SCRIPT_ENV_DOCKER_NETWORK
 
-#Login to Docker
+#Login to Docker (Warning!!! do it inside gitlab-runner user)
 docker login -u $SCRIPT_ENV_DOCKER_USER -p $SCRIPT_ENV_DOCKER_PASSWORD $SCRIPT_ENV_DOCKER_HOST
 
 #Downloading the gitlab runner
