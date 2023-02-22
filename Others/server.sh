@@ -46,6 +46,8 @@ server {
     ssl_certificate  /etc/nginx/certs/loc_cert.pem;
     ssl_certificate_key  /etc/nginx/certs/loc_key.pem;
 
+    client_max_body_size 128M;
+
     location / {
         proxy_pass       http://127.0.0.1:8003/;
     }
@@ -57,8 +59,10 @@ server {
     ssl_certificate  /etc/nginx/certs/loc_cert.pem;
     ssl_certificate_key  /etc/nginx/certs/loc_key.pem;
 
+    client_max_body_size 128M;
+
     location / {
-        proxy_pass       http://127.0.0.1:8000/;
+        proxy_pass       http://127.0.0.1:8004/;
     }
 }
 EOF
