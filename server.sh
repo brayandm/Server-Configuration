@@ -32,9 +32,6 @@ gitlab-runner register \
   --executor "shell" \
   --description "$SCRIPT_ENV_RUNNER_REGISTRATION_DESCRIPTION" \
   --tag-list "$SCRIPT_ENV_RUNNER_REGISTRATION_TAGS"
-  
-#Running the gitlab runner
-gitlab-runner run &
 
 #Create nginx proxy reverse configuration file
 tee custom.conf <<EOF
@@ -70,3 +67,6 @@ docker-compose up -d
 
 #Removing environment variables
 rm .env
+
+#Running the gitlab runner
+gitlab-runner run &
