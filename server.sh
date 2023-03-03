@@ -62,9 +62,6 @@ EOF
 #Getting up the nginx proxy manager
 docker-compose up -d
 
-#Removing environment variables
-rm .env
-
 #Running the gitlab runner
 gitlab-runner run &
 
@@ -73,3 +70,6 @@ su gitlab-runner
 
 #Login to Docker (Warning!!! do it inside gitlab-runner user)
 docker login -u $SCRIPT_ENV_DOCKER_USER -p $SCRIPT_ENV_DOCKER_PASSWORD $SCRIPT_ENV_DOCKER_HOST
+
+#Removing environment variables
+rm .env
