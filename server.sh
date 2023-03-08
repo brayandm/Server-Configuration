@@ -62,9 +62,6 @@ EOF
 #Getting up the nginx proxy manager
 docker-compose up -d
 
-#Running the gitlab runner
-gitlab-runner run &
-
 #Changing the user to gitlab-runner
 su gitlab-runner
 
