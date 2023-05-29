@@ -9,9 +9,6 @@ apt-get update
 #Installing docker compose
 apt-get install -y docker-compose
 
-#Giving permissions to the docker sock
-chmod 777 /var/run/docker.sock
-
 #Creating the docker network
 docker network create $SCRIPT_ENV_DOCKER_NETWORK
 
@@ -61,6 +58,10 @@ EOF
 
 #Getting up the nginx proxy manager
 docker-compose up -d
+
+#Giving permissions to the docker sock
+# probably try: "sudo usermod -aG docker gitlab-runner"
+chmod 777 /var/run/docker.sock
 
 #Changing the user to gitlab-runner
 su gitlab-runner
